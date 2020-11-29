@@ -4,10 +4,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import java.time.LocalDateTime;
 
+/**
+ * 요청 관련 기본 정보
+ */
 public class RequestInfoUtil {
 
     private static final String REQUEST_ID = "requestId";
-    private static final String REQUEST_DATE = "requestDate";
+    private static final String REQUEST_AT = "requestAt";
 
     /**
      * 로그 추적용 UUID 및 요청시간 저장
@@ -16,7 +19,7 @@ public class RequestInfoUtil {
      */
     public static void setRequestId(String obj) {
         setAttr(REQUEST_ID, obj);
-        setAttr(REQUEST_DATE, LocalDateTime.now());
+        setAttr(REQUEST_AT, LocalDateTime.now());
     }
 
     /**
@@ -33,8 +36,8 @@ public class RequestInfoUtil {
      *
      * @return
      */
-    public static LocalDateTime getRequestDate() {
-        return (LocalDateTime) getAttr(REQUEST_DATE);
+    public static LocalDateTime getRequestAt() {
+        return (LocalDateTime) getAttr(REQUEST_AT);
     }
 
     /**

@@ -23,6 +23,9 @@ import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * API 명세 관리 by 스웨거
+ */
 @Profile({"local", "dev", "qa"})
 @Configuration
 @EnableSwagger2

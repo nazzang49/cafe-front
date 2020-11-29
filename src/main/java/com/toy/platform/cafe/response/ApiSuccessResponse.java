@@ -6,9 +6,12 @@ import lombok.Builder;
 import lombok.Getter;
 import java.time.LocalDateTime;
 
+/**
+ * API 성공 응답 규약
+ */
 @Getter
 @Builder
-public class ApiResponse<T> {
+public class ApiSuccessResponse<T> {
 
     @ApiModelProperty(value = "상태코드")
     private int status;
@@ -25,24 +28,24 @@ public class ApiResponse<T> {
     @ApiModelProperty(value = "응답시간")
     private LocalDateTime responseAt;
 
-    public static <T> ApiResponse<T> success() {
-        return ApiResponse.<T>defaultBuilder().build();
+    public static <T> ApiSuccessResponse<T> success() {
+        return ApiSuccessResponse.<T>defaultBuilder().build();
     }
 
-    public static <T> ApiResponse<T> success(T data) {
-        return ApiResponse.<T>defaultBuilder()
+    public static <T> ApiSuccessResponse<T> success(T data) {
+        return ApiSuccessResponse.<T>defaultBuilder()
                 .data(data)
                 .build();
     }
 
-    private static <T> ApiResponseBuilder<T> defaultBuilder() {
-        return ApiResponse.<T>builder()
+    private static <T> ApiSuccessResponseBuilder<T> defaultBuilder() {
+        return ApiSuccessResponse.<T>builder()
                 .status(200)
-                .code("C200")
-                .message("SUCCESS")
+                .code("0000")
+                .message("Success")
                 .data(null)
                 .requestId(RequestInfoUtil.getRequestId())
-                .requestAt(RequestInfoUtil.getRequestDate())
+                .requestAt(RequestInfoUtil.getRequestAt())
                 .responseAt(LocalDateTime.now());
     }
 }
