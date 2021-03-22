@@ -33,3 +33,5 @@ build/
 .vscode/
 mvnw**
 .mvn/**
+
+.jython_cache/**

@@ -1,8 +1,6 @@
 package com.toy.platform.cafe.domain.member;
 
-import com.toy.platform.cafe.exception.ErrorCode;
-import com.toy.platform.cafe.exception.type.BusinessException;
-import com.toy.platform.cafe.response.ApiSuccessResponse;
+import com.toy.platform.cafe.response.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +18,8 @@ public class MemberController {
     // TODO: 2020-11-29 save 예시
     @ApiOperation(value = "회원 등록")
     @GetMapping
-    public ApiSuccessResponse<Long> save() {
+    public ApiResponse<Long> save() {
 //        AdminMember adminMember = adminMemberService.addAdminMember(saveRequest);
-        return ApiSuccessResponse.success(1L);
+        return ApiResponse.success(1L);
     }
 }

@@ -1,14 +1,14 @@
-package com.toy.platform.cafe.exception;
+package com.toy.platform.cafe.exception.error;
 
 import lombok.Getter;
 
 /**
- * 응답 및 에러 코드 관리
+ * 에러 코드 관리
  */
 @Getter
 public enum ErrorCode {
 
-    /* 기본 */
+    /* common */
     INVALID_INPUT_VALUE(400, "9000", " Invalid Input Value"),
     METHOD_NOT_ALLOWED(405, "9001", "Method Not Allowed"),
     ENTITY_NOT_FOUND(404, "9002", " Entity Not Found : %s"),
@@ -18,6 +18,11 @@ public enum ErrorCode {
     UNAUTHORIZED(401, "9006", "Unauthorized Account"),
     NOT_FOUND(404, "9007", "Not Found"),
     PERMISSION_DENIED(403, "9008", "Permission Denied"),
+    FAIL_TO_REQUEST(500, "5000", "통신 실패"),
+
+    /* custom */
+    FAIL_TO_SEARCH_LOCATION(400, "9008", "유사 이미지 검색 실패"),
+    NOT_FOUND_UPLOAD_IMG(400, "9008", "업로드 이미지 없음"),
     ;
 
     private final int status;

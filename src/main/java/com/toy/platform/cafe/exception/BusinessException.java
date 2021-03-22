@@ -1,6 +1,6 @@
-package com.toy.platform.cafe.exception.type;
+package com.toy.platform.cafe.exception;
 
-import com.toy.platform.cafe.exception.ErrorCode;
+import com.toy.platform.cafe.exception.error.ErrorCode;
 import lombok.Getter;
 
 public class BusinessException extends RuntimeException {

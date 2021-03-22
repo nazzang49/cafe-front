@@ -7,11 +7,11 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 /**
- * API 성공 응답 규약
+ * API common response
  */
 @Getter
 @Builder
-public class ApiSuccessResponse<T> {
+public class ApiResponse<T> {
 
     @ApiModelProperty(value = "상태코드")
     private int status;
@@ -21,28 +21,28 @@ public class ApiSuccessResponse<T> {
     private String message;
     @ApiModelProperty(value = "데이터")
     private T data;
-    @ApiModelProperty(value = "요청번호")
+    @ApiModelProperty(value = "고유번호")
     private String requestId;
-    @ApiModelProperty(value = "요청시간")
+    @ApiModelProperty(value = "요청시각")
     private LocalDateTime requestAt;
-    @ApiModelProperty(value = "응답시간")
+    @ApiModelProperty(value = "응답시각")
     private LocalDateTime responseAt;
 
-    public static <T> ApiSuccessResponse<T> success() {
-        return ApiSuccessResponse.<T>defaultBuilder().build();
+    public static <T> ApiResponse<T> success() {
+        return ApiResponse.<T>defaultBuilder().build();
     }
 
-    public static <T> ApiSuccessResponse<T> success(T data) {
-        return ApiSuccessResponse.<T>defaultBuilder()
+    public static <T> ApiResponse<T> success(T data) {
+        return ApiResponse.<T>defaultBuilder()
                 .data(data)
                 .build();
     }
 
-    private static <T> ApiSuccessResponseBuilder<T> defaultBuilder() {
-        return ApiSuccessResponse.<T>builder()
+    private static <T> ApiResponseBuilder<T> defaultBuilder() {
+        return ApiResponse.<T>builder()
                 .status(200)
-                .code("0000")
-                .message("Success")
+                .code("200")
+                .message("OK")
                 .data(null)
                 .requestId(RequestInfoUtil.getRequestId())
                 .requestAt(RequestInfoUtil.getRequestAt())

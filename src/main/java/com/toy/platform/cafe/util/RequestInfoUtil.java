@@ -11,6 +11,7 @@ public class RequestInfoUtil {
 
     private static final String REQUEST_ID = "requestId";
     private static final String REQUEST_AT = "requestAt";
+    private static final String REQUEST_DATE = "requestDate";
 
     /**
      * 로그 추적용 UUID 및 요청시간 저장
@@ -38,6 +39,15 @@ public class RequestInfoUtil {
      */
     public static LocalDateTime getRequestAt() {
         return (LocalDateTime) getAttr(REQUEST_AT);
+    }
+
+    /**
+     * 요청 시간 반환
+     *
+     * @return
+     */
+    public static LocalDateTime getRequestDate() {
+        return (LocalDateTime) getAttr(REQUEST_DATE);
     }
 
     /**
