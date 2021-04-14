@@ -31,7 +31,7 @@ public class RequestInitFilter extends OncePerRequestFilter {
                 doInitialize();
             }
             String requestId = UUID.randomUUID().toString();
-            RequestInfoUtil.setRequestId(requestId);
+//            RequestInfoUtil.setRequestId(requestId);
             ThreadContext.put("requestId", requestId);
             ThreadContext.put("customLog", customLog);
             ThreadContext.put("serviceName", serviceName);

@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Noto Sans KR';
+    src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap') format('woff');
+}
+
+body {
+    font-family: 'Noto Sans KR';
+    font-weight: 900;
+}

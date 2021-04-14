@@ -49,7 +49,7 @@ spring:
       hibernate.enable_lazy_load_no_trans: true
       hibernate.show_sql: true
       hibernate.format_sql: true
-#  redis:
+  #  redis:
 #    payment:
 #      host: 127.0.0.1
 #      port: 6379
@@ -61,20 +61,21 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
-  thymeleaf:
-    prefix: classpath:templates/
-    suffix: .html
-    cache: false
-    enabled: true
-    encoding: UTF-8
   mvc:
     throw-exception-if-no-handler-found: true
     static-path-pattern: /static/**
+  thymeleaf:
+    cache: false
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
 django.api-url: http://localhost:8000
+naver:
+  api-url: https://openapi.naver.com
+  client-id: Ijb5959MFikwPelryW8B
+  client-secret: Nn4CwTv0cu
+
 
 # dev
 ---

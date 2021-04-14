@@ -2,13 +2,15 @@ package com.toy.platform.cafe.fallback;
 
 import com.toy.platform.cafe.domain.map.response.MapResponse;
 import com.toy.platform.cafe.request.DjangoFeignClient;
+import com.toy.platform.cafe.request.NaverFeignClient;
 import com.toy.platform.cafe.response.DjangoApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 @Slf4j
-public class FeignFallback implements DjangoFeignClient {
+public class FeignFallback implements DjangoFeignClient, NaverFeignClient {
 
     private final Throwable cause;
 
@@ -29,9 +31,8 @@ public class FeignFallback implements DjangoFeignClient {
         return null;
     }
 
-//    @Override
-//    public ResponseEntity<PaymentCancelConvertFormResponse> cancelFormRequest(PgModuleCancelRequest paymentClientCancelRequest) {
-//        return null;
-//    }
-
+    @Override
+    public ResponseEntity<MapResponse.Search> searchPlaces(String clientId, String clientSecret, String query) {
+        return null;
+    }
 }

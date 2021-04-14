@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cafe Similarity-Based Search</title>
+
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/dropzone.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/font.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/overlay.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/common.css}">
+
+    <script src="http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=0jzt0obvk5"></script>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+<div class="wrapper">
+
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+
+    <aside th:replace="fragments/sidebar :: sidebar"></aside>
+
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="map" style="width:100%; height:600px;"></div>
+
+                        <div id="dropzone" style="user-select: auto;">
+                            <form th:action="@{/map/upload}" class="dropzone needsclick dz-clickable" id="demo-upload" style="user-select: auto;">
+                                <div class="dz-message needsclick" style="user-select: auto;">
+                                    <button type="button" class="dz-button" style="user-select: auto;">
+                                        Drag and Drop Image or Click Here
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+<script th:inline="javascript">
+    var isEmpty = function (value) {
+        if (value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) {
+            return true
+        } else {
+            return false
+        }
+    };
+</script>
+
+<script th:inline="javascript">
+
+    var mapOptions = {
+        center: new naver.maps.LatLng(37.3595704, 127.105399),
+        zoom: 15,
+        minZoom: 8,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: naver.maps.Position.TOP_RIGHT
+        }
+    };
+
+    var HOME_PATH = '/static/public/images/';
+    var map = new naver.maps.Map('map', mapOptions);
+    map.setOptions("mapTypeControl", true);
+</script>
+
+<script th:inline="javascript">
+
+</script>
+
+</div>
+
+<script th:src="@{/static/public/js/jquery.min.js}"></script>
+<script th:src="@{/static/public/js/jquery-ui.min.js}"></script>
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<script th:src="@{/static/public/js/bootstrap.js}"></script>
+<script th:src="@{/static/public/js/scrollbars.js}"></script>
+<script th:src="@{/static/public/js/adminlte.js}"></script>
+<script th:src="@{/static/public/js/demo.js}"></script>
+<script th:src="@{/static/public/js/dropzone.js}"></script>
+</body>
+</html>

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * API common response
@@ -44,8 +45,9 @@ public class ApiResponse<T> {
                 .code("200")
                 .message("OK")
                 .data(null)
-                .requestId(RequestInfoUtil.getRequestId())
-                .requestAt(RequestInfoUtil.getRequestAt())
+//                .requestId(RequestInfoUtil.getRequestId())
+//                .requestAt(RequestInfoUtil.getRequestAt())
+                .requestId(UUID.randomUUID().toString())
                 .responseAt(LocalDateTime.now());
     }
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Main</title>
+
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/font.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/overlay.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/common.css}">
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+<div class="wrapper">
+
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+
+    <aside th:replace="fragments/sidebar :: sidebar"></aside>
+
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <h4>WELCOME</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+    <aside class="control-sidebar control-sidebar-dark">
+    </aside>
+</div>
+
+<script th:src="@{/static/public/js/jquery.min.js}"></script>
+<script th:src="@{/static/public/js/jquery-ui.min.js}"></script>
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<script th:src="@{/static/public/js/bootstrap.js}"></script>
+<script th:src="@{/static/public/js/scrollbars.js}"></script>
+<script th:src="@{/static/public/js/adminlte.js}"></script>
+<script th:src="@{/static/public/js/demo.js}"></script>
+</body>
+</html>

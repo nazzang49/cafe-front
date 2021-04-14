@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,8 +27,10 @@ public class ErrorResponse {
      * @param message
      */
     public ErrorResponse(ErrorCode errorCode, String message) {
-        this.requestId = RequestInfoUtil.getRequestId();
-        this.requestAt = RequestInfoUtil.getRequestDate();
+//        this.requestId = RequestInfoUtil.getRequestId();
+//        this.requestAt = RequestInfoUtil.getRequestDate();
+        this.requestId = UUID.randomUUID().toString();
+        this.requestAt = LocalDateTime.now();
         this.responseAt = LocalDateTime.now();
         this.data = null;
         this.status = errorCode.getStatus();

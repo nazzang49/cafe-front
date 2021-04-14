@@ -36,5 +36,4 @@ public interface DjangoFeignClient {
     @HystrixCommand(commandKey = "testRequest")
     @GetMapping(value = "/test/{img}", produces = MediaType.APPLICATION_JSON_VALUE)
     DjangoApiResponse<List<MapResponse.Info>> getMostSimilarLocation(@PathVariable("img") String imgFileName);
-
 }

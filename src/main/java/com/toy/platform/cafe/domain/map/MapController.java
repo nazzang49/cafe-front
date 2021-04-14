@@ -9,13 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 지도 컨트롤러
@@ -35,7 +32,7 @@ public class MapController {
      */
     @GetMapping
     public String map() {
-        return "map";
+        return "cafe/map";
     }
 
     /**
@@ -45,27 +42,21 @@ public class MapController {
      * @return
      * @throws IOException
      */
-    @PostMapping(value = "/upload")
-    public ModelAndView getMostSimilarLocation(@RequestParam(value = "file") List<MultipartFile> fileList) {
+    @PostMapping(value = "upload")
+    @ResponseBody
+    public List<MapResponse.Info> getMostSimilarLocation(@RequestParam(value = "file") List<MultipartFile> fileList) {
         try {
-            Optional<List<MultipartFile>> uploadFileList = Optional.ofNullable(fileList);
-            log.info(uploadFileList.toString());
+            /* upload */
+            List<String> originalFileNameList = mapService.upload(fileList);
+            log.info("[ 유사 카페 이미지 검색 ] 업로드 이미지 파일명: {}", originalFileNameList.get(0));
 
-            if (uploadFileList.isPresent()) {
-                String originalFileName = uploadFileList.get().get(0).getOriginalFilename();
-                log.info("originalFileName: {}", originalFileName);
-                File dest = new File("C:/cafe-image/upload/" + originalFileName);
-                uploadFileList.get().get(0).transferTo(dest);
+            /* search img */
+            List<MapResponse.Info> locationList = mapService.getMostSimilarLocation(originalFileNameList.get(0));
+            log.info("[ 유사 카페 이미지 검색 ] 결과: {}", locationList);
 
-                List<MapResponse.Info> locationList = mapService.getMostSimilarLocation(originalFileName);
-                log.info("[ 유사 카페 이미지 검색 ] 결과: {}", locationList);
-
-                ModelAndView mav = new ModelAndView();
-                mav.setViewName("map");
-                mav.addObject("locationList", locationList);
-                return mav;
-            }
-            throw new BusinessException(ErrorCode.NOT_FOUND_UPLOAD_IMG);
+//            List<MapResponse.Info> locationList = new ArrayList<>();
+//            locationList.add(MapResponse.Info.builder().name("test.jpg").latitude("37.3595704").longitude("127.105399").build());
+            return locationList;
         } catch (BusinessException e) {
             log.error("[ 유사 카페 이미지 검색 ] 실패: {}", e.getErrorMessage());
             throw new BusinessException(e.getErrorCode());
@@ -76,9 +67,27 @@ public class MapController {
     }
 
     /**
+     * 네이버 장소 검색 API
+     */
+    @GetMapping(value = "search-places/{query}")
+    @ResponseBody
+    public MapResponse.Search searchPlaces(@PathVariable(value = "query") String query) {
+        try {
+            log.info("[ 네이버 장소 검색 ] QUERY: {}", query);
+            return mapService.searchPlaces(query);
+        } catch (BusinessException e) {
+            log.error("[ 네이버 장소 검색 ] 실패: {}", e.getErrorMessage());
+            throw new BusinessException(e.getErrorCode());
+        } catch (Exception e) {
+            log.error("[ 네이버 장소 검색 ] 실패: {}", e.getLocalizedMessage());
+            throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
      * 테스트 통신
      */
-    @GetMapping(value = "/test")
+    @GetMapping(value = "test")
     @ResponseBody
     public List<MapResponse.Info> test() {
         try {
