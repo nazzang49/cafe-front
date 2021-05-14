@@ -22,9 +22,7 @@ public class CafeController {
     public String detail(@Valid DetailRequestClient detailRequestClient) {
         try {
             log.info("[ 카페 상세 조회 ] 요청 : {}", detailRequestClient);
-
             cafeService.detail(detailRequestClient);
-
             return null;
         } catch (BusinessException e) {
             log.error("[ 카페 상세 조회 ] 실패: {}", e.getErrorMessage());
