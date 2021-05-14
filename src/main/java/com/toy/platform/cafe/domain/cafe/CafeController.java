@@ -21,6 +21,7 @@ public class CafeController {
     @GetMapping(value = "/detail")
     public String detail(@Valid DetailRequestClient detailRequestClient) {
         try {
+            // rebase 테스트
             log.info("[ 카페 상세 조회 ] 요청 : {}", detailRequestClient);
             cafeService.detail(detailRequestClient);
             return null;
