@@ -27,11 +27,11 @@ public class CafeController {
         } catch (BusinessException e) {
             log.error("[ 카페 상세 조회 ] 실패: {}", e.getErrorMessage());
             throw new BusinessException(e.getErrorCode());
-            // TODO: 2021-03-26 에러 페이지 이동 + 얼럿 노출 => 수정123
+            // TODO: 2021-03-26 에러 페이지 이동 + 얼럿 노출 => 수정
         } catch (Exception e) {
             log.error("[ 카페 상세 조회 ] 실패: {}", e.getLocalizedMessage());
             throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
-            // TODO: 2021-03-26 에러 페이지 이동 + 얼럿 노출 => 수정123
+            // TODO: 2021-03-26 에러 페이지 이동 + 얼럿 노출 => 수정
         }
     }
 }
