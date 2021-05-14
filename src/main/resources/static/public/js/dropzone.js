@@ -26,48 +26,7 @@
 
 (function() {
 
-    var markers = [],
-        infoWindows = [];
-
-    function updateMarkers(map, markers) {
-        var mapBounds = map.getBounds();
-        var marker, position;
-
-        for (var i = 0; i < markers.length; i++) {
-            marker = markers[i]
-            position = marker.getPosition();
-
-            if (mapBounds.hasLatLng(position)) {
-                showMarker(map, marker);
-            } else {
-                hideMarker(map, marker);
-            }
-        }
-    }
-
-    function showMarker(map, marker) {
-        if (marker.setMap()) return;
-        marker.setMap(map);
-    }
-
-    function hideMarker(map, marker) {
-        if (!marker.setMap()) return;
-        marker.setMap(null);
-    }
-
-    // 클릭 이벤트
-    function getClickHandler(seq) {
-        return function(e) {
-            var marker = markers[seq],
-                infoWindow = infoWindows[seq];
-
-            if (infoWindow.getMap()) {
-                infoWindow.close();
-            } else {
-                infoWindow.open(map, marker);
-            }
-        }
-    }
+    var position = [];
 
     var Dropzone, Emitter, camelize, contentLoaded, detectVerticalSquash, drawImageIOSFix, noop, without,
         __slice = [].slice,
@@ -412,43 +371,19 @@
             sending: noop,
             sendingmultiple: noop,
             success: function(file, response) {
-                // response => locationList
                 if (!isEmpty(response)) {
-                    for (var i = 0; i < response.length; i++) {
-                        console.log(response[i]);
-                        var position = new naver.maps.LatLng(Number(response[i].lat), Number(response[i].long));
-                        var marker = new naver.maps.Marker({
-                            map: map,
-                            position: position,
-                        });
+                    // SET POSITION
+                    for(var i = 0; i < response.length; i++) {
+                        var location = {
+                            latlng: new kakao.maps.LatLng(Number(response[i].lat), Number(response[i].long))
+                        }
+                        position.push(location)
+                    }
 
-                        var contentString = [
-                            '<div class="iw_inner">',
-                            '   <h4>' + response[i].name + '</h4>',
-                            '   <p>' + response[i].address + '<br />',
-                            '       <img src="' + HOME_PATH + response[i].name + '_1.jpg" width="60" height="60" alt="이미지 없음" class="thumb" /><br />',
-                            '       개인카페<br />',
-                            '       <a href="www.naver.com" target="_blank">www.naver.com</a>',
-                            '   </p>',
-                            '</div>'
-                        ].join('');
-
-                        var infoWindow = new naver.maps.InfoWindow({
-                            content: contentString
-                        });
-
-                        markers.push(marker);
-                        infoWindows.push(infoWindow);
-                    };
-
-                    map.panTo(new naver.maps.LatLng(Number(response[0].lat), Number(response[0].long)));
-
-                    naver.maps.Event.addListener(map, 'idle', function() {
-                        updateMarkers(map, markers);
-                    });
-
-                    for (var i=0, ii=markers.length; i<ii; i++) {
-                        naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+                    // SET OVERLAY
+                    for(var i = 0; i < response.length; i++) {
+                        console.log(position[i], response[i]);
+                        addMarker(position[i], response[i], i);
                     }
                 }
                 if (file.previewElement) {

@@ -10,10 +10,14 @@
     <link rel="stylesheet" th:href="@{/static/public/css/dropzone.css}">
     <link rel="stylesheet" th:href="@{/static/public/css/font.css}">
     <link rel="stylesheet" th:href="@{/static/public/css/overlay.css}">
+    <link rel="stylesheet" th:href="@{/static/public/css/customoverlay.css}">
     <link rel="stylesheet" th:href="@{/static/public/css/common.css}">
 
-    <script src="http://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=0jzt0obvk5"></script>
+    <!-- DEFAULT CSS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
 
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e845ed13bdd9cf741e5a2c6496baf59e"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
 <div class="wrapper">
@@ -27,8 +31,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div id="map" style="width:100%; height:600px;"></div>
-
+                        <div id="map" style="width:100%;height:600px;"></div>
                         <div id="dropzone" style="user-select: auto;">
                             <form th:action="@{/map/upload}" class="dropzone needsclick dz-clickable" id="demo-upload" style="user-select: auto;">
                                 <div class="dz-message needsclick" style="user-select: auto;">
@@ -46,7 +49,125 @@
 
     <footer th:replace="fragments/footer :: footer"></footer>
 
+<script>
+    var HOME_PATH = '/static/public/images/';
+    var overlays = [];
+
+    // // SET MARKER
+    // function addMarker(position, response, index) {
+    //     var marker = new kakao.maps.Marker({
+    //         map: map,
+    //         position: position.latlng,
+    //     });
+    //
+    //     marker.setMap(map);
+    //
+    //     var content = '<div class="wrap">' +
+    //         '    <div class="info">' +
+    //         '        <div class="title">' + response.name +
+    //         '            <div class="close" onclick="closeOverlay(' + index + ')" title="닫기"></div>' +
+    //         '        </div>' +
+    //         '        <div class="body">' +
+    //         '            <div class="img">' +
+    //         '                <img src="' + HOME_PATH + response.name + '_1.jpg" width="73" height="70">' +
+    //         '           </div>' +
+    //         '            <div class="desc">' +
+    //         '                <div class="ellipsis">' + response.address + '</div>' +
+    //         '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
+    //         '            </div>' +
+    //         '        </div>' +
+    //         '    </div>' +
+    //         '</div>';
+    //
+    //     var overlay = new kakao.maps.CustomOverlay({
+    //         content: content,
+    //         position: marker.getPosition()
+    //     });
+    //
+    //     overlays.push(overlay);
+    //
+    //     var flag = false;
+    //     // CLICK EVENT
+    //     kakao.maps.event.addListener(marker, 'click', function() {
+    //         if (!flag) {
+    //             overlay.setMap(map);
+    //             flag = true;
+    //         }
+    //     });
+    // }
+    //
+    // // CLOSE OVERLAY
+    // function closeOverlay(index) {
+    //     overlays[index].setMap(null);
+    // }
+
+    var container = document.getElementById('map');
+    var options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+    };
+
+    var map = new kakao.maps.Map(container, options);
+
+    // TYPE CONTROL
+    var mapTypeControl = new kakao.maps.MapTypeControl();
+    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+    var zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    // SET INFO WINDOW
+    var iwContent = '<div style="padding:5px; width: 250px; height: 130px;"><h4>카페명</h4><br>' +
+        '<a href="www.naver.com"><i class="fas fa-search"></i>검색</a>' +
+        '</div>',
+        iwPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+        iwRemoveable = true;
+
+    var infowindow = new kakao.maps.InfoWindow({
+        map: map,
+        position : iwPosition,
+        content : iwContent,
+        removable : iwRemoveable
+    });
+
+
+    // SET MARKER AND OVERLAY ON MAP TEST
+
+    // var marker = new kakao.maps.Marker({
+    //     map: map,
+    //     position: new kakao.maps.LatLng(33.450701, 126.570667)
+    // });
+    //
+    // var content = '<div class="wrap">' +
+    //     '    <div class="info">' +
+    //     '        <div class="title">33마켓카페,디저트_1' +
+    //     '<div class="close" onclick="closeOverlay()" title="닫기"></div>' +
+    //     '        </div>' +
+    //     '        <div class="body">' +
+    //     '            <div class="img">' +
+    //     '                <img src="' + HOME_PATH + '33마켓카페,디저트_1.jpg" width="73" height="70">' +
+    //     '           </div>' +
+    //     '            <div class="desc">' +
+    //     '                <div class="ellipsis">AAAA</div>' +
+    //     '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
+    //     '            </div>' +
+    //     '        </div>' +
+    //     '    </div>' +
+    //     '</div>';
+    //
+    // var overlay = new kakao.maps.CustomOverlay({
+    //     content: content,
+    //     position: marker.getPosition()
+    // });
+    //
+    // kakao.maps.event.addListener(marker, 'click', function () {
+    //     overlay.setMap(map);
+    // });
+
+</script>
+
 <script th:inline="javascript">
+
+    // CHECK EMPTY VALUE
     var isEmpty = function (value) {
         if (value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) {
             return true
@@ -54,27 +175,6 @@
             return false
         }
     };
-</script>
-
-<script th:inline="javascript">
-
-    var mapOptions = {
-        center: new naver.maps.LatLng(37.3595704, 127.105399),
-        zoom: 15,
-        minZoom: 8,
-        zoomControl: true,
-        zoomControlOptions: {
-            position: naver.maps.Position.TOP_RIGHT
-        }
-    };
-
-    var HOME_PATH = '/static/public/images/';
-    var map = new naver.maps.Map('map', mapOptions);
-    map.setOptions("mapTypeControl", true);
-</script>
-
-<script th:inline="javascript">
-
 </script>
 
 </div>
